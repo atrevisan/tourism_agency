@@ -224,14 +224,27 @@
   <widget class="QPushButton" name="button_register">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>340</y>
+     <x>190</x>
+     <y>360</y>
      <width>93</width>
      <height>28</height>
     </rect>
    </property>
    <property name="text">
     <string>Register</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="check_is_promo">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>270</y>
+     <width>81</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Is Promo</string>
    </property>
   </widget>
  </widget>

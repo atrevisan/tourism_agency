@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'widget_register_travel_pack.ui'
 #
-# Created: Mon Jan 26 08:38:04 2015
+# Created: Mon Jan 26 13:55:05 2015
 #      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -105,8 +105,11 @@ class Ui_widget_register_travel_pack(object):
         self.button_login.setGeometry(QtCore.QRect(310, 40, 93, 28))
         self.button_login.setObjectName(_fromUtf8("button_login"))
         self.button_register = QtGui.QPushButton(widget_register_travel_pack)
-        self.button_register.setGeometry(QtCore.QRect(180, 340, 93, 28))
+        self.button_register.setGeometry(QtCore.QRect(190, 360, 93, 28))
         self.button_register.setObjectName(_fromUtf8("button_register"))
+        self.check_is_promo = QtGui.QCheckBox(widget_register_travel_pack)
+        self.check_is_promo.setGeometry(QtCore.QRect(320, 270, 81, 20))
+        self.check_is_promo.setObjectName(_fromUtf8("check_is_promo"))
 
         self.retranslateUi(widget_register_travel_pack)
         QtCore.QMetaObject.connectSlotsByName(widget_register_travel_pack)
@@ -122,4 +125,5 @@ class Ui_widget_register_travel_pack(object):
         self.label_6.setText(_translate("widget_register_travel_pack", "Arrival date:", None))
         self.button_login.setText(_translate("widget_register_travel_pack", "Log in", None))
         self.button_register.setText(_translate("widget_register_travel_pack", "Register", None))
+        self.check_is_promo.setText(_translate("widget_register_travel_pack", "Is Promo", None))
 

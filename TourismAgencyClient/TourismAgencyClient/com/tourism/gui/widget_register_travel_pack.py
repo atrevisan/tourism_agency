@@ -56,7 +56,7 @@ class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
             self.date_edit_arrival.setDisabled(False)
 
     def register_travel_pack(self):
-        """"""
+        """Perform the travel pack registration on the server."""
 
         origin = self.line_edit_origem.text()
         destination = self.line_edit_destination.text()
@@ -65,9 +65,14 @@ class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
         arrival_date = self.date_edit_arrival.date().getDate()
 
         number_of_rooms = self.line_edit_number_of_rooms.text()
-
+        
+        is_promo = self.check_is_promo.isChecked()
+        
         handler = WebserviceHandler()
-        handler.register_travel_pack(origin, destination, departure_date, arrival_date, number_of_rooms)
+        handler.register_travel_pack(origin, destination, departure_date, arrival_date, number_of_rooms, is_promo)
 
         QMessageBox.about(self, "Success", "travel pack registered.")
-        
+
+        self.line_edit_origem.clear()
+        self.line_edit_destination.clear()
+        self.line_edit_number_of_rooms.clear()
