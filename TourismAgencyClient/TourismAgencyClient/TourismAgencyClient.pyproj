@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7ad3a6a7-a2ce-4df0-8e56-833c3ec75ab3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>TourismAgencyClient.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,41 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TourismAgencyClient.py" />
+    <Compile Include="com\tourism\authentication\user_authentication.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\authentication\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\gui\main_window.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\gui\ui_main_window.py" />
+    <Compile Include="com\tourism\gui\ui_widget_register_travel_pack.py" />
+    <Compile Include="com\tourism\gui\widget_register_travel_pack.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\gui\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="com\" />
+    <Folder Include="com\tourism\" />
+    <Folder Include="com\tourism\gui\" />
+    <Folder Include="com\tourism\gui\ui_files\" />
+    <Folder Include="com\tourism\authentication\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="com\tourism\gui\ui_files\main_window.ui" />
+    <Content Include="com\tourism\gui\ui_files\widget_register_travel_pack.ui" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
