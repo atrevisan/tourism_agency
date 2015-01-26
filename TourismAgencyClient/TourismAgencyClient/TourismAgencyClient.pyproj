@@ -39,6 +39,12 @@
     <Compile Include="com\tourism\gui\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="com\tourism\webservice\webservice_handler.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\webservice\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="com\tourism\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -53,10 +59,12 @@
     <Folder Include="com\tourism\gui\" />
     <Folder Include="com\tourism\gui\ui_files\" />
     <Folder Include="com\tourism\authentication\" />
+    <Folder Include="com\tourism\webservice\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="com\tourism\gui\ui_files\main_window.ui" />
     <Content Include="com\tourism\gui\ui_files\widget_register_travel_pack.ui" />
+    <Content Include="com\tourism\webservice\webservice_url.pkl" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

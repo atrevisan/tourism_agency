@@ -3,11 +3,7 @@
 #
 # License: MIT
 
-import pickle
-import os
-
-from suds.client import Client
-
+from com.tourism.webservice.webservice_handler import WebserviceHandler
 
 class UserAuth():
     """Check through the webservice if user exists.
@@ -27,7 +23,7 @@ class UserAuth():
         self.password = password
 
     def authenticate(self):
-        """Perform the remote method call to the webservice.
+        """Call the webservice handler method that handles authentication.
         
         Return
         -------
@@ -36,13 +32,7 @@ class UserAuth():
             otherwize user not registered.
         """
 
-        # get the webservice url
-        with open(os.getcwd() + r"\com\tourism\authentication\webservice_url.pkl", 'rb') as input:
-            url = pickle.loads(input.read())
+        handler = WebserviceHandler()
+        result = handler.authenticate(self.username, self.password)
 
-        client = Client(url)
-
-        # call the server authenticate method
-        result = client.service.authenticate(self.username, self.password)
-        
         return result 

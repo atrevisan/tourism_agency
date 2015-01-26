@@ -7,9 +7,11 @@ from PyQt4.QtGui import QWidget
 from PyQt4 import QtGui, QtCore
 import PyQt4
 from PyQt4.QtGui import QMessageBox
+from suds.client import Client
 
 from com.tourism.gui.ui_widget_register_travel_pack import Ui_widget_register_travel_pack 
 from com.tourism.authentication.user_authentication import UserAuth
+from com.tourism.webservice.webservice_handler import WebserviceHandler
 
 class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
     """This widget is intended for travel packages registration.
@@ -32,6 +34,7 @@ class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
 
         # event handling
         self.button_login.clicked.connect(self.perform_authentication)
+        self.button_register.clicked.connect(self.register_travel_pack)
 
     def perform_authentication(self):
         """Check the server if user exists."""
@@ -51,3 +54,20 @@ class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
             self.line_edit_number_of_rooms.setDisabled(False)
             self.date_edit_departure.setDisabled(False)
             self.date_edit_arrival.setDisabled(False)
+
+    def register_travel_pack(self):
+        """"""
+
+        origin = self.line_edit_origem.text()
+        destination = self.line_edit_destination.text()
+
+        departure_date = self.date_edit_departure.date().getDate()
+        arrival_date = self.date_edit_arrival.date().getDate()
+
+        number_of_rooms = self.line_edit_number_of_rooms.text()
+
+        handler = WebserviceHandler()
+        handler.register_travel_pack(origin, destination, departure_date, arrival_date, number_of_rooms)
+
+        QMessageBox.about(self, "Success", "travel pack registered.")
+        
