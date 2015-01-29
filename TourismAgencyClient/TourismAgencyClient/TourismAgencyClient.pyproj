@@ -32,7 +32,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="com\tourism\gui\ui_main_window.py" />
+    <Compile Include="com\tourism\gui\ui_widget_packages.py" />
     <Compile Include="com\tourism\gui\ui_widget_register_travel_pack.py" />
+    <Compile Include="com\tourism\gui\widget_packages.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="com\tourism\gui\widget_register_travel_pack.py">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +56,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+    <Compile Include="com\tourism\gui\widget_table.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="com\" />
@@ -63,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="com\tourism\gui\ui_files\main_window.ui" />
+    <Content Include="com\tourism\gui\ui_files\widget_packages.ui" />
     <Content Include="com\tourism\gui\ui_files\widget_register_travel_pack.ui" />
     <Content Include="com\tourism\webservice\webservice_url.pkl" />
   </ItemGroup>

@@ -7,6 +7,7 @@ from PyQt4.QtGui import QMainWindow
 
 from com.tourism.gui.ui_main_window import Ui_main_window
 from com.tourism.gui.widget_register_travel_pack import WidgetRegisterTravelPack
+from com.tourism.gui.widget_packages import WidgetPackages
 
 class MainWindow(QMainWindow, Ui_main_window):
     """The application main window."""
@@ -20,7 +21,15 @@ class MainWindow(QMainWindow, Ui_main_window):
 
         # custom event handling
         self.button_register_travel_pack.clicked.connect(self.add_widget_register_travel_pack)
-        
+        self.button_packages.clicked.connect(self.add_widget_packages)
+
+    def add_widget_packages(self):
+        """Replaces the current widget for the widget packages."""
+        widget_packages = WidgetPackages()
+
+        self.clear_layout()
+        self.vlayout_content.addWidget(widget_packages)
+                
 
     def add_widget_register_travel_pack(self):
         """Replaces the current widget for the widget register travel pack."""

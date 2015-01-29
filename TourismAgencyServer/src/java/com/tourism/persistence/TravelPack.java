@@ -28,11 +28,23 @@ public class TravelPack implements Serializable{
     @XmlElement(name = "destination")
     public String destination;
     
-    @XmlElement(name = "departureDate")
-    public int[] departureDate;
+    @XmlElement(name = "departureDay")
+    public int departureDay;
     
-    @XmlElement(name = "arrivalDate")
-    public int[] arrivalDate;
+    @XmlElement(name = "departureMonth")
+    public int departureMonth;
+    
+    @XmlElement(name = "departureYear")
+    public int departureYear;
+    
+    @XmlElement(name = "arrivalDay")
+    public int arrivalDay;
+    
+    @XmlElement(name = "arrivalMonth")
+    public int arrivalMonth;
+    
+    @XmlElement(name = "arrivalYear")
+    public int arrivalYear;
     
     @XmlElement(name = "numberOfRooms")
     public int numberOfRooms;
@@ -40,20 +52,33 @@ public class TravelPack implements Serializable{
     @XmlElement(name = "isPromo")
     public boolean isPromo;
     
+    @XmlElement(name = "guestAges")
+    public int [] guestAges;
+    
     public TravelPack(int id,
                       String origin, 
                       String destination,
-                      int[] departureDate,
-                      int[] arrivalDate,
+                      int departureDay,
+                      int departureMonth,
+                      int departureYear,
+                      int arrivalDay,
+                      int arrivalMonth,
+                      int arrivalYear,
                       int numberOfRooms,
-                      boolean isPromo) {
+                      boolean isPromo,
+                      int [] guestAges) {
     
         this.id = id;
         this.origin = origin;
         this.destination = destination;
-        this.departureDate = departureDate;
-        this.arrivalDate = arrivalDate;
+        this.departureDay = departureDay;
+        this.departureMonth = departureMonth;
+        this.departureYear = departureYear;
+        this.arrivalDay = arrivalDay;
+        this.arrivalMonth = arrivalMonth;
+        this.arrivalYear = arrivalYear;
         this.numberOfRooms = numberOfRooms;
         this.isPromo = isPromo;
+        this.guestAges = guestAges;
     }
 }

@@ -16,6 +16,7 @@ import com.tourism.persistence.TravelPack;
 import java.util.ArrayList;
 import javax.jws.Oneway;
 
+
 /**
  *
  * @author Allan
@@ -23,14 +24,7 @@ import javax.jws.Oneway;
 @WebService(serviceName = "TourismAgencyWebservice")
 public class TourismAgencyWebservice {
 
-    /**
-     * This is a sample web service operation
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
-
+    
     /**
      * Test if the username and password provided by the client
      * belong to the admin.
@@ -44,9 +38,13 @@ public class TourismAgencyWebservice {
     public boolean authenticate(@WebParam(name = "username") String username, 
                                 @WebParam(name = "password") String password) {
         
+        System.out.println("authenticating");
+        
         UserAuth userAuth = new UserAuth();
         
-        return userAuth.login(username, password);
+        boolean result = userAuth.login(username, password);
+        
+        return result;
     }
 
     /**
@@ -55,29 +53,74 @@ public class TourismAgencyWebservice {
      * 
      * @param origin is the place of departure for this travel pack.
      * @param destination is the place of destination for this travel pack.
-     * @param departureDate is the (day, month, year) of departure.
-     * @param arrivalDate is the (day, month, year) of arrival.
+     * @param departureDay is the day of departure.
+     * @param departureMonth is the month of departure.
+     * @param departureYear is the year of departure.
+     * @param arrivalDay is the day of arrival.
+     * @param arrivalMonth is the month of arrival.
+     * @param arrivalYear is the year of arrival.
      * @param numberOfRooms is the number of rooms for the destination of this travel pack.
      * @param isPromo tells if this package is promotional.
+     * @param guestAges of the maximun nuber of guests that can be hosted at the destination.
      */
+    
     @WebMethod(operationName = "registerTravelPack")
     @Oneway
     public void registerTravelPack(@WebParam(name = "origin") String origin, 
                                    @WebParam(name = "destination") String destination, 
-                                   @WebParam(name = "departureDate") int[] departureDate, 
-                                   @WebParam(name = "arrivalDate") int[] arrivalDate, 
+                                   @WebParam(name = "departureYear") int departureYear,
+                                   @WebParam(name = "departureMonth") int departureMonth,
+                                   @WebParam(name = "departureDay") int departureDay,
+                                   @WebParam(name = "arrivalYear") int arrivalYear,
+                                   @WebParam(name = "arrivalMonth") int arrivalMonth,
+                                   @WebParam(name = "arrivalDay") int arrivalDay,
                                    @WebParam(name = "numberOfRooms") int numberOfRooms,
-                                   @WebParam(name = "isPromo") boolean isPromo) {
+                                   @WebParam(name = "isPromo") boolean isPromo,
+                                   @WebParam(name = "guestAges") int [] guestAges) {
+        
+        System.out.println("Registering Travel pack");
         
         TouristicProductsManager manager = new TouristicProductsManager();
+        ArrayList<TravelPack> travelPacks = manager.getTravelPacks();
         
-        ArrayList<TravelPack> travelPacks = manager.getPromotionalTravelPacks();
+        int travelPackID;
         
-        int travelPackID = travelPacks.get(travelPacks.size() - 1).id + 1;
+        if (travelPacks == null)
+                travelPackID = 1;
+        else
+            travelPackID = travelPacks.get(travelPacks.size() - 1).id + 1;
         
-        TravelPack pack = new TravelPack(travelPackID, origin, destination, 
-                                         departureDate, arrivalDate, numberOfRooms, isPromo);
+        TravelPack pack = new TravelPack(travelPackID, 
+                                         origin,
+                                         destination, 
+                                         departureDay,
+                                         departureMonth,
+                                         departureYear,
+                                         arrivalDay,
+                                         arrivalMonth,
+                                         arrivalYear, 
+                                         numberOfRooms, 
+                                         isPromo,
+                                         guestAges);
         
         manager.saveTravelPack(pack);
+    }
+
+    /**
+     * Return all the registered travel packs to the client.
+     * 
+     * @return travelPacks available for purchase
+     */
+    @WebMethod(operationName = "getTravelPacks")
+    public TravelPack[] getTravelPacks() {
+       
+        System.out.println("Getting travel packs");
+        
+        TouristicProductsManager manager = new TouristicProductsManager();
+        ArrayList<TravelPack> travelPacks = manager.getTravelPacks();
+        
+        TravelPack[] travelPackArray = new TravelPack[travelPacks.size()];
+        
+        return travelPacks.toArray(travelPackArray);
     }
 }

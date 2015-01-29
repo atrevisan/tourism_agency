@@ -41,7 +41,7 @@ class WebserviceHandler():
 
         return result
 
-    def register_travel_pack(self, origin, destination, departure_date, arrival_date, number_of_rooms, is_promo):
+    def register_travel_pack(self, origin, destination, departure_date, arrival_date, number_of_rooms, is_promo, guest_ages):
         """Perform a remote method call for registering a travel pack.
         
         Parameters
@@ -53,11 +53,11 @@ class WebserviceHandler():
             The place of detination of the travel pack.
 
         departure_date : tuple (int, int, int)
-            Date display format (day, month, year) for
+            Date display format (year, month, day) for
             the date of departure.
 
         arrival_date : tuple (int, int, int)
-            Date display format (day, month, year) for
+            Date display format (year, month, day) for
             the date of arrival.
 
         number_of_rooms : int
@@ -65,7 +65,24 @@ class WebserviceHandler():
 
         is_promo : boolean
             If this package is promotional.
+
+        guest_ages : list of int
+            The ages of the maximun number of guests
+            for this travel package.
         """
 
-        self.client.service.registerTravelPack(origin, destination, departure_date, arrival_date, number_of_rooms, is_promo)
+        self.client.service.registerTravelPack(origin, destination, departure_date[0], departure_date[1], departure_date[2],
+                                               arrival_date[0], arrival_date[1], arrival_date[2], number_of_rooms, is_promo,
+                                               guest_ages)
 
+    def get_travel_packs(self):
+        """Get all the available travel packs for purchase.
+        
+        Return
+        -------
+        travel_packs : list of TravelPacks
+            Objects that represent a travel pack.
+        """
+
+        travel_packs = self.client.service.getTravelPacks()
+        return travel_packs

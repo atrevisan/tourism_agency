@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+
 /**
  * This class manages the persistence of the 
  * travel packs, plane tickets and hosting facilities
@@ -22,6 +23,8 @@ import java.util.ArrayList;
  * @author Allan
  */
 public class TouristicProductsManager {
+    
+    private final String travelPacksFileName = "travelPacks3.ser"; 
    
     /**
      * Use generics to save a list of objects. In this case they can be:
@@ -82,7 +85,8 @@ public class TouristicProductsManager {
     */
     public void saveTravelPack(TravelPack pack) {
     
-        this.saveObject(pack, "travelPackList.ser");
+        
+        this.saveObject(pack, this.travelPacksFileName);
     }
     
     /**
@@ -96,14 +100,14 @@ public class TouristicProductsManager {
         ArrayList<TravelPack> travelPackList = null;
         try {
             
-            FileInputStream inputStream = new FileInputStream("travelPackList.ser");
+            FileInputStream inputStream = new FileInputStream(this.travelPacksFileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             
             travelPackList = (ArrayList<TravelPack>) objectInputStream.readObject();
             
         } catch (FileNotFoundException e) {
             
-            e.printStackTrace();
+            return null;
             
         } catch (IOException e) {
             

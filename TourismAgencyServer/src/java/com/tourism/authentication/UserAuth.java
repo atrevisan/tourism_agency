@@ -12,8 +12,8 @@ package com.tourism.authentication;
  */
 public class UserAuth {
     
-    private String username = "admin";
-    private String password = "admin";
+    private final String username = "admin";
+    private final String password = "admin";
     
     /**
     * Perform login. Check if the given username and
@@ -27,7 +27,7 @@ public class UserAuth {
     public boolean login(String username, String password) {
     
         if (this.username.equals(username) && this.password.equals(password) ) {
-        
+         
             return true;
         }
         
