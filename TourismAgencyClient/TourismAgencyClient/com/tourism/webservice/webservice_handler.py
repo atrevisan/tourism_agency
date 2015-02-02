@@ -86,3 +86,39 @@ class WebserviceHandler():
 
         travel_packs = self.client.service.getTravelPacks()
         return travel_packs
+
+    def buy_travel_package(self,
+                           credit_card_number,
+                           number_of_installments,
+                           chosen_package_id):
+        """Request a package purchase.
+        
+        The client credit card number will be checked on the server
+        and if it is everything ok it will perform the purchase, ie:
+        remove the package from the server.
+
+        Parameters
+        ----------
+        credit_card_number : int
+            The credit card of the customer.
+
+        number_of_installments : int
+            The total number of payments for this
+            touristic travel package.
+
+        chosen_package_id : int
+            A single sequencial identifier that
+            makes possible locate this package on 
+            the server.
+
+        Returns
+        --------
+        result : boolean
+            True if the operation succeded, False otherwize.
+        """
+
+        result = self.client.service.buyTravelPackage(credit_card_number,
+                                                      number_of_installments,
+                                                      chosen_package_id)
+
+        return result

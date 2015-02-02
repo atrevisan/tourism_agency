@@ -13,44 +13,46 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  * This class manages the persistence of the 
  * travel packs, plane tickets and hosting facilities
- * products
+ * i.e the tourism agency products.
  * 
  * @author Allan
  */
 public class TouristicProductsManager {
     
-    private final String travelPacksFileName = "travelPacks3.ser"; 
+    private final String travelPacksFileName = "travelPacks4.ser"; 
    
     /**
-     * Use generics to save a list of objects. In this case they can be:
+     * Save a list of products. They can be:
      * TravelPack, PlaneTicket or Hosting.
      * 
-     * @param object is the new object that will be saved.
+     * @param product is the new Product that will be saved.
      * @param  fileName is location in the file system in wich
-     * the list will be saved.
+     *                  the list will be saved.
      */
-    private <E> void saveObject(E object, String fileName) {
+    private void saveProduct(Product product, String fileName) {
     
         try {
             
             FileInputStream inputStream = new FileInputStream(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             
-            ArrayList<E> objectList = (ArrayList<E>) objectInputStream.readObject();
+            ArrayList<Product> productsList = (ArrayList<Product>) objectInputStream.readObject();
             
             // update the list
-            objectList.add(object);
+            productsList.add(product);
             
             FileOutputStream outputStream = new FileOutputStream(fileName);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         
             // then save it again
-            objectOutputStream.writeObject(objectList);
+            objectOutputStream.writeObject(productsList);
             
         } catch (FileNotFoundException e) {
             
@@ -59,22 +61,80 @@ public class TouristicProductsManager {
                 FileOutputStream outputStream = new FileOutputStream(fileName);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                 
-                ArrayList<E> objectList  = new ArrayList<>();
-                objectList.add(object);
-                objectOutputStream.writeObject(objectList);
+                ArrayList<Product> productsList  = new ArrayList<>();
+                productsList.add(product);
+                objectOutputStream.writeObject(productsList);
                 
             } catch (FileNotFoundException ee) {
-                
-                ee.printStackTrace();
             } catch (IOException ee) {
-                
-                ee.printStackTrace();
             }
             
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+        }
+    }
+    
+    /**
+     * Delete a product from the file system.
+     * 
+     * @param productID is the id of the product that will be deleted.
+     * @param fileName is the file system location of the file containning
+     *                 products.
+     * 
+     * @return true if the product was found, false otherwize.
+     */
+    public boolean deleteProduct(int productID, String fileName) {
+    
+        ArrayList<Product> products = this.getProducts(fileName);
+        
+        for (Product product : products) {
+        
+            if (product.id == productID) {
+            
+                products.remove(product);
+                
+                try {
+            
+                    FileOutputStream outputStream = new FileOutputStream(fileName);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        
+                    objectOutputStream.writeObject(products);
+            
+                } catch (IOException ex) {
+                    Logger.getLogger(TouristicProductsManager.class.getName()).log(Level.SEVERE, null, ex);
+                } finally{
+                    return true;
+                }
+            } else
+                return false;
+                
+            }
+        
+        return false;
+    }
+    
+     /**
+     * Recover an array list of products from the file system. They
+     * can be TravelPack, PlaneTicket or Hosting.
+     * 
+     * @param fileName of the list of products that will be recovered.
+     * 
+     * @return productsList containning one kind of touristic
+     *         product.
+     */
+    private ArrayList<Product> getProducts(String fileName) {
+    
+        ArrayList<Product> productsList = null;
+        try {
+            
+            FileInputStream inputStream = new FileInputStream(fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            
+            productsList = (ArrayList<Product>) objectInputStream.readObject();
+            
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
+        } finally{        
+            return productsList; 
         }
     }
     
@@ -84,12 +144,22 @@ public class TouristicProductsManager {
      * @param pack is the Travel pack to be saved.
     */
     public void saveTravelPack(TravelPack pack) {
-    
         
-        this.saveObject(pack, this.travelPacksFileName);
+        this.saveProduct(pack, this.travelPacksFileName);
     }
     
     /**
+     * Remove a product from the filesystem
+     * @param travelPackid is the id of the travel pack that will 
+     *                     be deleted.
+     * @return true if the product exists, false otherwize.
+     */
+    public boolean deleteTravelPack(int travelPackid) {
+    
+        return this.deleteProduct(travelPackid, this.travelPacksFileName);
+    }
+    
+     /**
      * Recover the registered travel packs.
      * 
      * @return travelPackList containing all 
@@ -97,33 +167,49 @@ public class TouristicProductsManager {
      */
     public ArrayList<TravelPack> getTravelPacks() {
     
-        ArrayList<TravelPack> travelPackList = null;
-        try {
-            
-            FileInputStream inputStream = new FileInputStream(this.travelPacksFileName);
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            
-            travelPackList = (ArrayList<TravelPack>) objectInputStream.readObject();
-            
-        } catch (FileNotFoundException e) {
-            
+        ArrayList<Product> products = this.getProducts(this.travelPacksFileName);
+        
+        if(products == null)
             return null;
-            
-        } catch (IOException e) {
-            
-            e.printStackTrace();
-            
-        } catch (ClassNotFoundException e) {
-            
-            e.printStackTrace();
         
-        } 
+        ArrayList<TravelPack> travelPacks = this.copy(products, TravelPack.class);
         
-        return travelPackList;  
+        return travelPacks;
     }
     
+    /**
+     * Filter the promotional travel packs.
+     * @return result are the travelPacks filtered.
+     */
     public ArrayList<TravelPack> getPromotionalTravelPacks() {
     
-        return null;
+        ArrayList<TravelPack> travelPacks = this.getTravelPacks();
+        ArrayList<TravelPack> result = new ArrayList<>();
+        
+        for (TravelPack travelPack : travelPacks) {
+        
+            if (travelPack.isPromo)
+                result.add(travelPack);
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Cast an ArrayList of Products to the corresponding product type.
+     * 
+     * @param products are the objects that will be cast.
+     * @param type is the type to wich the products will be cast.
+     * @return result is the ArrayList with the right type of objects.
+     */
+    private <E> ArrayList<E> copy(ArrayList<Product> products, Class<E> type) {
+    
+        ArrayList<E> result = new ArrayList<>();
+        
+        for(Product prod : products) 
+            
+            result.add(type.cast(prod));
+         
+        return result;
     }
 }

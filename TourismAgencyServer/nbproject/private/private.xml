@@ -4,7 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/src/java/com/tourism/persistence/Product.java</file>
             <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/src/java/com/tourism/webservice/TourismAgencyWebservice.java</file>
+            <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/src/java/com/tourism/authentication/UserAuth.java</file>
+            <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/src/java/com/tourism/payment/PaymentProcessor.java</file>
             <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/src/java/com/tourism/persistence/TouristicProductsManager.java</file>
             <file>file:/C:/Users/Allan/Google%20Drive/UTFPR/2014-2/SISDIST/TRABALHO5/TourismAgency/TourismAgencyServer/src/java/com/tourism/persistence/TravelPack.java</file>
         </group>

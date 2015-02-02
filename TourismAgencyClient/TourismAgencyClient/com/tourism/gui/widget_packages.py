@@ -98,6 +98,7 @@ class WidgetPackages(QWidget, Ui_widget_packages):
         self.button_choose_package.clicked.connect(self.choose_package)
         self.button_remove_package.clicked.connect(self.remove_package)
         self.table_packs.clicked.connect(self.display_ages)
+        self.button_buy.clicked.connect(self.buy)
 
     def choose_package(self):
         """Get the selected package and add it to another table.
@@ -109,7 +110,7 @@ class WidgetPackages(QWidget, Ui_widget_packages):
         if self.table_chosen_package.rowCount() == 0:
             
             row_index = self.table_packs.currentRow()
-            row = self.table_packs.get_row(row_index, self.table_packs.columnCount())
+            row = self.table_packs.get_row(row_index)
 
             self.table_chosen_package.insertRow(0)
             self.table_chosen_package.setItem(0 , 0, QtGui.QTableWidgetItem(row[0]))
@@ -124,7 +125,7 @@ class WidgetPackages(QWidget, Ui_widget_packages):
     def remove_package(self):
         """Remove a chosen package so the user can chose another one."""
 
-        row = self.table_chosen_package.get_row(0, self.table_chosen_package.columnCount())
+        row = self.table_chosen_package.get_row(0)
 
         new_row_index = self.table_packs.rowCount()
         self.table_packs.insertRow(new_row_index)
@@ -155,3 +156,26 @@ class WidgetPackages(QWidget, Ui_widget_packages):
             self.table_guests.insertRow(new_row_index)
 
             self.table_guests.setItem(new_row_index , 0, QtGui.QTableWidgetItem(str(column[row_index])))
+
+    def buy(self):
+        """Perform the package purchase operation."""
+
+        credit_card_number = int (self.line_edit_credit_card.text())
+        number_of_installments = int(self.combo_number_of_installments.currentText())
+
+        chosen_package_id = int (self.table_chosen_package.get_row(0)[0])
+        
+        handler = WebserviceHandler()
+        success = handler.buy_travel_package(credit_card_number,
+                                            number_of_installments,
+                                            chosen_package_id)
+
+        if success:
+
+            QMessageBox.about(self, "Success", "travel package bought.")
+
+        else:
+
+            QMessageBox.about(self, "Failure", "Problem with the credit card.")
+
+

@@ -11,6 +11,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 
 import com.tourism.authentication.UserAuth;
+import com.tourism.payment.PaymentProcessor;
 import com.tourism.persistence.TouristicProductsManager;
 import com.tourism.persistence.TravelPack;
 import java.util.ArrayList;
@@ -87,9 +88,13 @@ public class TourismAgencyWebservice {
         
         if (travelPacks == null)
                 travelPackID = 1;
-        else
-            travelPackID = travelPacks.get(travelPacks.size() - 1).id + 1;
-        
+        else{
+           
+            if (travelPacks.size() > 0)
+                travelPackID = travelPacks.get(travelPacks.size() - 1).id + 1;
+            else
+                travelPackID = 1;
+        }
         TravelPack pack = new TravelPack(travelPackID, 
                                          origin,
                                          destination, 
@@ -122,5 +127,37 @@ public class TourismAgencyWebservice {
         TravelPack[] travelPackArray = new TravelPack[travelPacks.size()];
         
         return travelPacks.toArray(travelPackArray);
+    }
+
+    /**
+     * Perform the selling operation: check payment and if everything ok
+     * delete the product.
+     * 
+     * @param creditCardNumber is used to check the authenticity of the
+     *                         customer.
+     * @param numberOfInstallments is used to control the number of payments
+     *                             the customer will make.
+     * @param packageId is used to find this product and then delete it.
+     * 
+     * @return true if the operation succeded, false otherwize.
+     */
+    @WebMethod(operationName = "buyTravelPackage")
+    public boolean buyTravelPackage(@WebParam(name = "creditCardNumber") int creditCardNumber, 
+                                    @WebParam(name = "numberOfInstallments") int numberOfInstallments, 
+                                    @WebParam(name = "packageId") int packageId) {
+        
+        System.out.println("Performing travel package purchase.");
+        
+        PaymentProcessor processor = new PaymentProcessor();
+        
+        boolean paymentOk = processor.processPayment(creditCardNumber, numberOfInstallments);
+        
+        if (paymentOk){
+        
+            TouristicProductsManager manager = new TouristicProductsManager();
+            return manager.deleteTravelPack(packageId);
+        }
+        
+        return false;
     }
 }

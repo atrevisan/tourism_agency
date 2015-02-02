@@ -18,6 +18,8 @@ class MyTable(QTableWidget):
         self.setmydata()
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
+        self.setSelectionBehavior(QAbstractItemView.SelectRows)
+       
  
     def setmydata(self):
         """Add elements to the table."""
@@ -30,16 +32,13 @@ class MyTable(QTableWidget):
                 self.setItem(m, n, newitem)
         self.setHorizontalHeaderLabels(horHeaders)
 
-    def get_row(self, row_index, number_of_columns):
+    def get_row(self, row_index):
         """Get elements of the row and remove it.
         
         Parameters
         -----------
         row_index : int
             The index of the row to be rempved.
-
-        number_of_columns : int
-            The horizontal width of this table.
 
         Returns
         --------
@@ -48,7 +47,7 @@ class MyTable(QTableWidget):
         """
 
         row = []
-        for column_index in range(number_of_columns):
+        for column_index in range(self.columnCount()):
 
             row.append(self.item(row_index, column_index).text())
 
@@ -56,16 +55,13 @@ class MyTable(QTableWidget):
 
         return row
 
-    def get_column(self, column_index, number_of_rows):
+    def get_column(self, column_index):
         """Get elements of the column and remove it.
         
         Parameters
         -----------
         column_index : int
             The index of the column to be removed.
-
-        number_of_rows : int
-            The width width of this table.
 
         Returns
         --------
@@ -74,10 +70,12 @@ class MyTable(QTableWidget):
         """
 
         column = []
-        for row_index in range(number_of_rows):
+        for row_index in range(self.rowCount()):
 
             column.append(self.item(row_index, column_index).text())
 
         self.removeColumn(column_index)
 
         return column
+
+        

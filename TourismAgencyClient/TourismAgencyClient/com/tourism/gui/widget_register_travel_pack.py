@@ -86,7 +86,7 @@ class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
         arrival_date = self.date_edit_arrival.date().getDate()
         number_of_rooms = int(self.combo_number_of_rooms.currentText())
         is_promo = self.check_is_promo.isChecked()
-        guest_ages = self.table_guests.get_column(0, self.table_guests.rowCount())
+        guest_ages = self.table_guests.get_column(0)
 
         guest_ages = [int(i) for i in guest_ages]
         
@@ -103,4 +103,24 @@ class WidgetRegisterTravelPack(QWidget, Ui_widget_register_travel_pack):
 
         self.line_edit_origem.clear()
         self.line_edit_destination.clear()
-       
+
+        self.clear_layout(self.vlayout_guests)
+        data = OrderedDict([('Guest age', [])])
+        self.table_guests = MyTable(data, 0, 1)
+        self.vlayout_guests.addWidget(self.table_guests)
+
+        self.date_edit_arrival.setDateTime(QtCore.QDateTime(QtCore.QDate(2015, 1, 1), QtCore.QTime(0, 0, 0)))
+
+        self.date_edit_departure.setDateTime(QtCore.QDateTime(QtCore.QDate(2015, 1, 1), QtCore.QTime(0, 0, 0)))
+
+        self.combo_number_of_rooms.setCurrentIndex(0)
+        self.combo_age.setCurrentIndex(0)
+
+        self.check_is_promo.setChecked(False)
+
+    def clear_layout(self, layout):
+        """Remove all the widgets from the layout."""
+        
+        while layout.count():
+            child = layout.takeAt(0)
+            child.widget().deleteLater()
