@@ -12,6 +12,7 @@ import javax.jws.WebParam;
 
 import com.tourism.authentication.UserAuth;
 import com.tourism.payment.PaymentProcessor;
+import com.tourism.persistence.PlaneTicket;
 import com.tourism.persistence.TouristicProductsManager;
 import com.tourism.persistence.TravelPack;
 import java.util.ArrayList;
@@ -159,5 +160,68 @@ public class TourismAgencyWebservice {
         }
         
         return false;
+    }
+
+    /**
+     * Perform the registration of a plane ticket. Only the admin
+     * has permition to perform this operation.
+     * 
+     * @param origin is the place of departure for this plane ticket.
+     * @param destination is the place of destination for this plane ticket.
+     * @param departureDay is the day of departure.
+     * @param departureMonth is the month of departure.
+     * @param departureYear is the year of departure.
+     * @param arrivalDay is the day of arrival.
+     * @param arrivalMonth is the month of arrival.
+     * @param arrivalYear is the year of arrival.
+     * @param numberOfRooms is the number of rooms for the destination of this 
+     *                      plane ticket.
+     * @param onlyDeparture tells if this plane ticket is departure only or roundtrip.
+     * @param guestAges of the maximun nuber of guests that can be hosted at the destination.
+     */
+    @WebMethod(operationName = "registerPlaneTicket")
+    @Oneway
+    public void registerPlaneTicket(@WebParam(name = "origin") String origin, 
+                                    @WebParam(name = "destination") String destination, 
+                                    @WebParam(name = "departureYear") int departureYear,
+                                    @WebParam(name = "departureMonth") int departureMonth,
+                                    @WebParam(name = "departureDay") int departureDay,
+                                    @WebParam(name = "arrivalYear") int arrivalYear,
+                                    @WebParam(name = "arrivalMonth") int arrivalMonth,
+                                    @WebParam(name = "arrivalDay") int arrivalDay,
+                                    @WebParam(name = "numberOfRooms") int numberOfRooms,
+                                    @WebParam(name = "onlyDeparture") boolean onlyDeparture,
+                                    @WebParam(name = "guestAges") int [] guestAges) {
+        
+        System.out.println("Registering Plane ticket");
+        
+        TouristicProductsManager manager = new TouristicProductsManager();
+        ArrayList<PlaneTicket> planeTickets = manager.getPlaneTickets();
+        
+        int planeTicketID;
+        
+        if (planeTickets == null)
+                planeTicketID = 1;
+        else{
+           
+            if (planeTickets.size() > 0)
+                planeTicketID = planeTickets.get(planeTickets.size() - 1).id + 1;
+            else
+                planeTicketID = 1;
+        }
+        PlaneTicket planeTicket = new PlaneTicket(planeTicketID, 
+                                                  origin,
+                                                  destination, 
+                                                  departureDay,
+                                                  departureMonth,
+                                                  departureYear,
+                                                  arrivalDay,
+                                                  arrivalMonth,
+                                                  arrivalYear, 
+                                                  numberOfRooms, 
+                                                  onlyDeparture,
+                                                  guestAges);
+        
+        manager.savePlaneTicket(planeTicket);
     }
 }

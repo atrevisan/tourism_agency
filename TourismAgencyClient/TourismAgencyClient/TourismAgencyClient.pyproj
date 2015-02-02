@@ -33,8 +33,13 @@
     </Compile>
     <Compile Include="com\tourism\gui\ui_main_window.py" />
     <Compile Include="com\tourism\gui\ui_widget_packages.py" />
+    <Compile Include="com\tourism\gui\ui_widget_plane_tickets.py" />
+    <Compile Include="com\tourism\gui\ui_widget_register_plane_ticket.py" />
     <Compile Include="com\tourism\gui\ui_widget_register_travel_pack.py" />
     <Compile Include="com\tourism\gui\widget_packages.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\gui\widget_register_plane_ticket.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="com\tourism\gui\widget_register_travel_pack.py">

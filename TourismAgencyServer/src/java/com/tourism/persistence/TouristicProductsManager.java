@@ -26,7 +26,8 @@ import java.util.logging.Logger;
  */
 public class TouristicProductsManager {
     
-    private final String travelPacksFileName = "travelPacks4.ser"; 
+    private final String travelPacksFileName = "travelPacks4.ser";
+    private final String planeTicketsFileName = "planeTickets.ser";
    
     /**
      * Save a list of products. They can be:
@@ -175,6 +176,34 @@ public class TouristicProductsManager {
         ArrayList<TravelPack> travelPacks = this.copy(products, TravelPack.class);
         
         return travelPacks;
+    }
+    
+    /**
+    * Save a plane ticket.
+    * 
+    * @param planeTicket is the plane ticket that will be saved.
+    */
+    public void savePlaneTicket(PlaneTicket planeTicket) {
+        
+        this.saveProduct(planeTicket, this.planeTicketsFileName);
+    }
+    
+     /**
+     * Recover the registered plane tickets.
+     * 
+     * @return planeTickets containing all 
+     * the registered plane tickets.
+     */
+    public ArrayList<PlaneTicket> getPlaneTickets() {
+    
+        ArrayList<Product> products = this.getProducts(this.planeTicketsFileName);
+        
+        if(products == null)
+            return null;
+        
+        ArrayList<PlaneTicket> planeTickets = this.copy(products, PlaneTicket.class);
+        
+        return planeTickets;
     }
     
     /**

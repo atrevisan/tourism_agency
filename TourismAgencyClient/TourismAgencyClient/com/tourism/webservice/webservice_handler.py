@@ -122,3 +122,45 @@ class WebserviceHandler():
                                                       chosen_package_id)
 
         return result
+
+    def register_plane_ticket(self,
+                              origin, 
+                              destination, 
+                              departure_date, 
+                              arrival_date, 
+                              number_of_rooms, 
+                              only_departure,
+                              guest_ages):
+        """Perform a remote method call for registering a plane ticket.
+        
+        Parameters
+        ----------
+        origin : string
+            The place of origin of the travel pack.
+
+        destination : string
+            The place of detination of the travel pack.
+
+        departure_date : tuple (int, int, int)
+            Date display format (year, month, day) for
+            the date of departure.
+
+        arrival_date : tuple (int, int, int)
+            Date display format (year, month, day) for
+            the date of arrival.
+
+        number_of_rooms : int
+            Number of rooms for this travel package.
+
+        only_departure : boolean
+            If this plane ticket is only for departure
+            or is round trip.
+
+        guest_ages : list of int
+            The ages of the maximun number of guests
+            for this travel package.
+        """
+
+        self.client.service.registerPlaneTicket(origin, destination, departure_date[0], departure_date[1], departure_date[2],
+                                               arrival_date[0], arrival_date[1], arrival_date[2], number_of_rooms, only_departure,
+                                               guest_ages)
