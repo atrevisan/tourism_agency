@@ -1,1 +1,3 @@
 /TourismAgencyServer/dist/
+*.pyc
+*.class
