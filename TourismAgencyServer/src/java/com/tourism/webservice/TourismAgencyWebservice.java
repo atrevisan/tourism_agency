@@ -224,4 +224,54 @@ public class TourismAgencyWebservice {
         
         manager.savePlaneTicket(planeTicket);
     }
+    
+    /**
+     * Return all the registered plane tickets to the client.
+     * 
+     * @return planeTickets available for purchase
+     */
+    @WebMethod(operationName = "getPlaneTickets")
+    public PlaneTicket[] getPlaneTickets() {
+       
+        System.out.println("Getting plane tickets");
+        
+        TouristicProductsManager manager = new TouristicProductsManager();
+        ArrayList<PlaneTicket> planeTickets = manager.getPlaneTickets();
+        
+        PlaneTicket[] planeTicketsArray = new PlaneTicket[planeTickets.size()];
+        
+        return planeTickets.toArray(planeTicketsArray);
+    }
+    
+     /**
+     * Perform the selling operation: check payment and if everything ok
+     * delete the product.
+     * 
+     * @param creditCardNumber is used to check the authenticity of the
+     *                         customer.
+     * @param numberOfInstallments is used to control the number of payments
+     *                             the customer will make.
+     * @param planeTicketID is used to find this product and then delete it.
+     * 
+     * @return true if the operation succeded, false otherwize.
+     */
+    @WebMethod(operationName = "buyPlaneTicket")
+    public boolean buyPlaneTicket(@WebParam(name = "creditCardNumber") int creditCardNumber, 
+                                  @WebParam(name = "numberOfInstallments") int numberOfInstallments, 
+                                  @WebParam(name = "planeTicketID") int planeTicketID) {
+        
+        System.out.println("Performing plane ticket purchase.");
+        
+        PaymentProcessor processor = new PaymentProcessor();
+        
+        boolean paymentOk = processor.processPayment(creditCardNumber, numberOfInstallments);
+        
+        if (paymentOk){
+        
+            TouristicProductsManager manager = new TouristicProductsManager();
+            return manager.deletePlaneTicket(planeTicketID);
+        }
+        
+        return false;
+    }
 }

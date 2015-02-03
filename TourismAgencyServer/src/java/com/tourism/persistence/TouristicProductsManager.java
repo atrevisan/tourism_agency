@@ -83,7 +83,7 @@ public class TouristicProductsManager {
      * 
      * @return true if the product was found, false otherwize.
      */
-    public boolean deleteProduct(int productID, String fileName) {
+    private boolean deleteProduct(int productID, String fileName) {
     
         ArrayList<Product> products = this.getProducts(fileName);
         
@@ -178,6 +178,24 @@ public class TouristicProductsManager {
         return travelPacks;
     }
     
+     /**
+     * Filter the promotional travel packs.
+     * @return result are the travelPacks filtered.
+     */
+    public ArrayList<TravelPack> getPromotionalTravelPacks() {
+    
+        ArrayList<TravelPack> travelPacks = this.getTravelPacks();
+        ArrayList<TravelPack> result = new ArrayList<>();
+        
+        for (TravelPack travelPack : travelPacks) {
+        
+            if (travelPack.isPromo)
+                result.add(travelPack);
+        }
+        
+        return result;
+    }
+    
     /**
     * Save a plane ticket.
     * 
@@ -205,23 +223,16 @@ public class TouristicProductsManager {
         
         return planeTickets;
     }
-    
+
     /**
-     * Filter the promotional travel packs.
-     * @return result are the travelPacks filtered.
+     * Remove a product from the filesystem
+     * @param planeTicketID is the id of the plane ticket that will 
+     *                     be deleted.
+     * @return true if the product exists, false otherwize.
      */
-    public ArrayList<TravelPack> getPromotionalTravelPacks() {
+    public boolean deletePlaneTicket(int planeTicketID) {
     
-        ArrayList<TravelPack> travelPacks = this.getTravelPacks();
-        ArrayList<TravelPack> result = new ArrayList<>();
-        
-        for (TravelPack travelPack : travelPacks) {
-        
-            if (travelPack.isPromo)
-                result.add(travelPack);
-        }
-        
-        return result;
+        return this.deleteProduct(planeTicketID, this.planeTicketsFileName);
     }
     
     /**

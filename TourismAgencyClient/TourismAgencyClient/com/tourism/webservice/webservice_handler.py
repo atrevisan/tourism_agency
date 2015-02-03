@@ -164,3 +164,51 @@ class WebserviceHandler():
         self.client.service.registerPlaneTicket(origin, destination, departure_date[0], departure_date[1], departure_date[2],
                                                arrival_date[0], arrival_date[1], arrival_date[2], number_of_rooms, only_departure,
                                                guest_ages)
+
+    def get_plane_tickets(self):
+        """Get all the available plane tickets for purchase.
+        
+        Return
+        -------
+        plane_tickets : list of PlaneTicket
+            Objects that represent a plane ticket.
+        """
+
+        plane_tickets = self.client.service.getPlaneTickets()
+        return plane_tickets
+
+    def buy_plane_ticket(self,
+                         credit_card_number,
+                         number_of_installments,
+                         chosen_plane_ticket_id):
+        """Request a plane ticket purchase.
+        
+        The client credit card number will be checked on the server
+        and if it is everything ok it will perform the purchase, ie:
+        remove the plane ticket from the server.
+
+        Parameters
+        ----------
+        credit_card_number : int
+            The credit card of the customer.
+
+        number_of_installments : int
+            The total number of payments for this
+            touristic plane ticket.
+
+        chosen_plane_ticket_id : int
+            A single sequencial identifier that
+            makes possible locate this plane ticket on 
+            the server.
+
+        Returns
+        --------
+        result : boolean
+            True if the operation succeded, False otherwize.
+        """
+
+        result = self.client.service.buyPlaneTicket(credit_card_number,
+                                                    number_of_installments,
+                                                    chosen_plane_ticket_id)
+
+        return result

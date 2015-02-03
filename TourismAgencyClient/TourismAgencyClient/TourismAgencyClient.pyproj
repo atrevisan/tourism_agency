@@ -39,6 +39,9 @@
     <Compile Include="com\tourism\gui\widget_packages.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="com\tourism\gui\widget_plane_tickets.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="com\tourism\gui\widget_register_plane_ticket.py">
       <SubType>Code</SubType>
     </Compile>
