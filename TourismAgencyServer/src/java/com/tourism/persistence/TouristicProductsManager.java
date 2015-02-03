@@ -105,10 +105,8 @@ public class TouristicProductsManager {
                 } finally{
                     return true;
                 }
-            } else
-                return false;
-                
-            }
+            }       
+        }
         
         return false;
     }

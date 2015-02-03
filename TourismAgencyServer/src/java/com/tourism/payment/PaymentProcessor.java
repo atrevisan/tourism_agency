@@ -29,8 +29,10 @@ public class PaymentProcessor {
     
         System.out.println("Number of installments: " + numberOfInstallments);
         
-        if (creditCardNumber == 1234)
+        if (creditCardNumber == 1234) {
+         
             return true;
+        }
         else
             return false;
     }

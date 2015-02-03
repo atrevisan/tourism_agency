@@ -176,4 +176,4 @@ class WidgetPlaneTickets(QWidget, Ui_widget_plane_tickets):
 
         else:
 
-            QMessageBox.about(self, "Failure", "Problem with the credit card.")
+            QMessageBox.about(self, "Failure", "Problem with the purchase.")

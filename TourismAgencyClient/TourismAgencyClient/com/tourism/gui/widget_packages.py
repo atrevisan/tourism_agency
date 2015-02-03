@@ -19,6 +19,11 @@ class WidgetPackages(QWidget, Ui_widget_packages):
     
     The user can visualize the available travel packages and purchase one of them.
 
+    Parameters
+    -----------
+    only_promo : boolean (default False)
+        Show only the promotional packages if True.
+
     Atributes
     -----------
     guest_ages : dict
@@ -39,7 +44,7 @@ class WidgetPackages(QWidget, Ui_widget_packages):
         This table displays the ages for the number of 
         guests that can be acomodated at the destination.
     """
-    def __init__(self):
+    def __init__(self, only_promo=False):
 
         QWidget.__init__(self)
         
@@ -60,14 +65,30 @@ class WidgetPackages(QWidget, Ui_widget_packages):
 
         for travel_pack in travel_packs:
 
-            ids.append(str(travel_pack.id))
-            origins.append(travel_pack.origin)
-            destinations.append(travel_pack.destination)
-            departure_dates.append("%d/%d/%d" % (travel_pack.departureDay, travel_pack.departureMonth, travel_pack.departureYear))
-            arrival_dates.append("%d/%d/%d" % (travel_pack.arrivalDay, travel_pack.arrivalMonth, travel_pack.arrivalYear))
-            number_of_rooms.append(str(travel_pack.numberOfRooms))
-            are_promo.append("yes" if travel_pack.isPromo else "no")
-            self.guest_ages[str(travel_pack.id)] = travel_pack.guestAges
+            if only_promo:
+
+                if travel_pack.isPromo:
+
+                    ids.append(str(travel_pack.id))
+                    origins.append(travel_pack.origin)
+                    destinations.append(travel_pack.destination)
+                    departure_dates.append("%d/%d/%d" % (travel_pack.departureDay, travel_pack.departureMonth, travel_pack.departureYear))
+                    arrival_dates.append("%d/%d/%d" % (travel_pack.arrivalDay, travel_pack.arrivalMonth, travel_pack.arrivalYear))
+                    number_of_rooms.append(str(travel_pack.numberOfRooms))
+                    are_promo.append("yes" if travel_pack.isPromo else "no")
+                    self.guest_ages[str(travel_pack.id)] = travel_pack.guestAges
+
+            else:
+
+                ids.append(str(travel_pack.id))
+                origins.append(travel_pack.origin)
+                destinations.append(travel_pack.destination)
+                departure_dates.append("%d/%d/%d" % (travel_pack.departureDay, travel_pack.departureMonth, travel_pack.departureYear))
+                arrival_dates.append("%d/%d/%d" % (travel_pack.arrivalDay, travel_pack.arrivalMonth, travel_pack.arrivalYear))
+                number_of_rooms.append(str(travel_pack.numberOfRooms))
+                are_promo.append("yes" if travel_pack.isPromo else "no")
+                self.guest_ages[str(travel_pack.id)] = travel_pack.guestAges
+
 
         data = OrderedDict([('id', ids),
                             ('origin', origins), 
@@ -176,6 +197,6 @@ class WidgetPackages(QWidget, Ui_widget_packages):
 
         else:
 
-            QMessageBox.about(self, "Failure", "Problem with the credit card.")
+            QMessageBox.about(self, "Failure", "Problem with the purchase.")
 
 
