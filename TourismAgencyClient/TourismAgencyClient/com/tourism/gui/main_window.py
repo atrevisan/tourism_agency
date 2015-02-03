@@ -10,6 +10,7 @@ from com.tourism.gui.widget_register_travel_pack import WidgetRegisterTravelPack
 from com.tourism.gui.widget_packages import WidgetPackages
 from com.tourism.gui.widget_register_plane_ticket import WidgetRegisterPlaneTicket
 from com.tourism.gui.widget_plane_tickets import WidgetPlaneTickets
+from com.tourism.gui.widget_register_hosting import WidgetRegisterHosting
 
 class MainWindow(QMainWindow, Ui_main_window):
     """The application main window."""
@@ -26,6 +27,8 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.button_packages.clicked.connect(self.add_widget_packages)
         self.button_register_plane_ticket.clicked.connect(self.add_widget_register_plane_ticket)
         self.button_plane_tickets.clicked.connect(self.add_widget_plane_tickets)
+        self.button_show_promo_packs.clicked.connect(self.add_widget_promo_packages)
+        self.button_register_hosting.clicked.connect(self.add_widget_register_hosting)
 
     def add_widget_packages(self):
         """Replaces the current widget for the widget packages."""
@@ -33,7 +36,14 @@ class MainWindow(QMainWindow, Ui_main_window):
 
         self.clear_layout()
         self.vlayout_content.addWidget(widget_packages)
-                
+    
+    def add_widget_promo_packages(self):
+        """Replaces the current widget for the widget promo packages."""
+        widget_promo_packages = WidgetPackages(only_promo=True)
+
+        self.clear_layout()
+        self.vlayout_content.addWidget(widget_promo_packages)            
+
     def add_widget_plane_tickets(self):
         """Replaces the current widget for the widget plane tickets."""
         widget_plane_tickets = WidgetPlaneTickets()
@@ -56,6 +66,15 @@ class MainWindow(QMainWindow, Ui_main_window):
 
         self.clear_layout()
         self.vlayout_content.addWidget(widget_register_plane_ticket)
+
+    def add_widget_register_hosting(self):
+        """Replaces the current widget for the widget register hosting."""
+
+        widget_register_hosting = WidgetRegisterHosting()
+
+        self.clear_layout()
+        self.vlayout_content.addWidget(widget_register_hosting)
+
 
     def clear_layout(self):
         """Remove all the widgets from the main layout."""

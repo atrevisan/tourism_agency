@@ -28,7 +28,8 @@ public class TouristicProductsManager {
     
     private final String travelPacksFileName = "travelPacks4.ser";
     private final String planeTicketsFileName = "planeTickets.ser";
-   
+    private final String hostsFileName = "hosts.ser";
+    
     /**
      * Save a list of products. They can be:
      * TravelPack, PlaneTicket or Hosting.
@@ -231,6 +232,34 @@ public class TouristicProductsManager {
     public boolean deletePlaneTicket(int planeTicketID) {
     
         return this.deleteProduct(planeTicketID, this.planeTicketsFileName);
+    }
+    
+    /**
+    * Save a hosting facility.
+    * 
+    * @param host is the hosting facility that will be saved.
+    */
+    public void saveHosting(Hosting host) {
+        
+        this.saveProduct(host, this.hostsFileName);
+    }
+    
+    /**
+     * Recover the registered hosts.
+     * 
+     * @return hosts containing all 
+     *         the registered hosting facilities.
+     */
+    public ArrayList<Hosting> getHosts() {
+    
+        ArrayList<Product> products = this.getProducts(this.hostsFileName);
+        
+        if(products == null)
+            return null;
+        
+        ArrayList<Hosting> hosts = this.copy(products, Hosting.class);
+        
+        return hosts;
     }
     
     /**

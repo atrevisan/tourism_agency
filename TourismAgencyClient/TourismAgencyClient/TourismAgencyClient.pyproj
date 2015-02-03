@@ -32,14 +32,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="com\tourism\gui\ui_main_window.py" />
+    <Compile Include="com\tourism\gui\ui_widget_hosting.py" />
     <Compile Include="com\tourism\gui\ui_widget_packages.py" />
     <Compile Include="com\tourism\gui\ui_widget_plane_tickets.py" />
+    <Compile Include="com\tourism\gui\ui_widget_register_hosting.py" />
     <Compile Include="com\tourism\gui\ui_widget_register_plane_ticket.py" />
     <Compile Include="com\tourism\gui\ui_widget_register_travel_pack.py" />
+    <Compile Include="com\tourism\gui\widget_hosting.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="com\tourism\gui\widget_packages.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="com\tourism\gui\widget_plane_tickets.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="com\tourism\gui\widget_register_hosting.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="com\tourism\gui\widget_register_plane_ticket.py">
@@ -78,7 +86,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="com\tourism\gui\ui_files\main_window.ui" />
+    <Content Include="com\tourism\gui\ui_files\widget_hosting.ui" />
     <Content Include="com\tourism\gui\ui_files\widget_packages.ui" />
+    <Content Include="com\tourism\gui\ui_files\widget_plane_tickets.ui" />
+    <Content Include="com\tourism\gui\ui_files\widget_register_hosting.ui" />
+    <Content Include="com\tourism\gui\ui_files\widget_register_plane_ticket.ui" />
     <Content Include="com\tourism\gui\ui_files\widget_register_travel_pack.ui" />
     <Content Include="com\tourism\webservice\webservice_url.pkl" />
   </ItemGroup>

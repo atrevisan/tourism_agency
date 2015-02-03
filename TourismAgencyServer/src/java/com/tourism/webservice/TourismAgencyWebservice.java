@@ -12,6 +12,7 @@ import javax.jws.WebParam;
 
 import com.tourism.authentication.UserAuth;
 import com.tourism.payment.PaymentProcessor;
+import com.tourism.persistence.Hosting;
 import com.tourism.persistence.PlaneTicket;
 import com.tourism.persistence.TouristicProductsManager;
 import com.tourism.persistence.TravelPack;
@@ -273,5 +274,62 @@ public class TourismAgencyWebservice {
         }
         
         return false;
+    }
+    
+    /**
+     * Perform the registration of a hosting facility. Only the admin
+     * has permition to perform this operation.
+     * 
+     * @param destination is the place of destination for this hosting facility.
+     * @param inputDay is the day of input.
+     * @param inputMonth is the month of input.
+     * @param inputYear is the year of input.
+     * @param outputDay is the day of output.
+     * @param outputMonth is the month of output.
+     * @param outputYear is the year of output.
+     * @param numberOfRooms is the number of rooms for the hosting.
+     * @param guestAges of the maximun nuber of guests that can be hosted.
+     */
+    @WebMethod(operationName = "registerHosting")
+    @Oneway
+    public void registerHosting(@WebParam(name = "destination") String destination, 
+                                @WebParam(name = "inputYear") int inputYear,
+                                @WebParam(name = "inputMonth") int inputMonth,
+                                @WebParam(name = "inputDay") int inputDay,
+                                @WebParam(name = "outputYear") int outputYear,
+                                @WebParam(name = "outputMonth") int outputMonth,
+                                @WebParam(name = "outputDay") int outputDay,
+                                @WebParam(name = "numberOfRooms") int numberOfRooms,
+                                @WebParam(name = "guestAges") int [] guestAges) {
+        
+        System.out.println("Registering hosting");
+        
+        TouristicProductsManager manager = new TouristicProductsManager();
+        ArrayList<Hosting> hosts = manager.getHosts();
+        
+        int hostID;
+        
+        if (hosts == null)
+                hostID = 1;
+        else{
+           
+            if (hosts.size() > 0)
+                hostID = hosts.get(hosts.size() - 1).id + 1;
+            else
+                hostID = 1;
+        }
+        
+        Hosting host = new Hosting(hostID, 
+                                   destination, 
+                                   inputDay,
+                                   inputMonth,
+                                   inputYear,
+                                   outputDay,
+                                   outputMonth,
+                                   outputYear, 
+                                   numberOfRooms, 
+                                   guestAges);
+        
+        manager.saveHosting(host);
     }
 }

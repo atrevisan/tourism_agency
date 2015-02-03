@@ -212,3 +212,35 @@ class WebserviceHandler():
                                                     chosen_plane_ticket_id)
 
         return result
+
+    def register_hosting(self,
+                         destination, 
+                         input_date, 
+                         output_date, 
+                         number_of_rooms, 
+                         guest_ages):
+        """Perform a remote method call for registering a hosting.
+        
+        Parameters
+        ----------
+        destination : string
+            The place where the hosting is located.
+
+        input_date : tuple (int, int, int)
+            Date display format (year, month, day) for
+            the date of input.
+
+        output_date : tuple (int, int, int)
+            Date display format (year, month, day) for
+            the date of output.
+
+        number_of_rooms : int
+            Number of rooms for this travel package.
+
+        guest_ages : list of int
+            The ages of the maximun number of guests
+            for this travel package.
+        """
+
+        self.client.service.registerHosting(destination, input_date[0], input_date[1], input_date[2],
+                                            output_date[0], output_date[1], output_date[2], number_of_rooms, guest_ages)
