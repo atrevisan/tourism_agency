@@ -22,9 +22,9 @@ class WidgetPlaneTickets(QWidget, Ui_widget_plane_tickets):
     Atributes
     -----------
     guest_ages : dict
-        Map the pack id to its associated guest agest
+        Map the plane ticket id to its associated guest ages
         for display in another table when the row of this
-        pack is selected.
+        plane ticket is selected.
 
     table_plane_tickets : MyTable
         Table for displaying the avalilable plane tickets for purchase.

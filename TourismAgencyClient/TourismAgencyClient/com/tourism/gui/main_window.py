@@ -11,6 +11,7 @@ from com.tourism.gui.widget_packages import WidgetPackages
 from com.tourism.gui.widget_register_plane_ticket import WidgetRegisterPlaneTicket
 from com.tourism.gui.widget_plane_tickets import WidgetPlaneTickets
 from com.tourism.gui.widget_register_hosting import WidgetRegisterHosting
+from com.tourism.gui.widget_hosting import WidgetHosting
 
 class MainWindow(QMainWindow, Ui_main_window):
     """The application main window."""
@@ -29,9 +30,11 @@ class MainWindow(QMainWindow, Ui_main_window):
         self.button_plane_tickets.clicked.connect(self.add_widget_plane_tickets)
         self.button_show_promo_packs.clicked.connect(self.add_widget_promo_packages)
         self.button_register_hosting.clicked.connect(self.add_widget_register_hosting)
+        self.button_hosting.clicked.connect(self.add_widget_hosting)
 
     def add_widget_packages(self):
         """Replaces the current widget for the widget packages."""
+        
         widget_packages = WidgetPackages()
 
         self.clear_layout()
@@ -39,6 +42,7 @@ class MainWindow(QMainWindow, Ui_main_window):
     
     def add_widget_promo_packages(self):
         """Replaces the current widget for the widget promo packages."""
+        
         widget_promo_packages = WidgetPackages(only_promo=True)
 
         self.clear_layout()
@@ -46,10 +50,19 @@ class MainWindow(QMainWindow, Ui_main_window):
 
     def add_widget_plane_tickets(self):
         """Replaces the current widget for the widget plane tickets."""
+        
         widget_plane_tickets = WidgetPlaneTickets()
 
         self.clear_layout()
         self.vlayout_content.addWidget(widget_plane_tickets)
+
+    def add_widget_hosting(self):
+        """Replaces the current widget for the widget hosting."""
+        
+        widget_hosting = WidgetHosting()
+
+        self.clear_layout()
+        self.vlayout_content.addWidget(widget_hosting)
 
     def add_widget_register_travel_pack(self):
         """Replaces the current widget for the widget register travel pack."""
@@ -74,7 +87,6 @@ class MainWindow(QMainWindow, Ui_main_window):
 
         self.clear_layout()
         self.vlayout_content.addWidget(widget_register_hosting)
-
 
     def clear_layout(self):
         """Remove all the widgets from the main layout."""

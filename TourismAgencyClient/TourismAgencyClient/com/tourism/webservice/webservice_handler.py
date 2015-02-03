@@ -244,3 +244,51 @@ class WebserviceHandler():
 
         self.client.service.registerHosting(destination, input_date[0], input_date[1], input_date[2],
                                             output_date[0], output_date[1], output_date[2], number_of_rooms, guest_ages)
+
+    def get_hosts(self):
+        """Get all the available hosting facilities for purchase.
+        
+        Return
+        -------
+        hosts : list of Hosting
+            Objects that represent a hosting facility.
+        """
+
+        hosts = self.client.service.getHosts()
+        return hosts
+
+    def buy_hosting(self, 
+                    credit_card_number,
+                    number_of_installments,
+                    chosen_hosting_id):
+        """Request a hosting facility purchase.
+        
+        The client credit card number will be checked on the server
+        and if it is everything ok it will perform the purchase, ie:
+        remove the hosting product from the server.
+
+        Parameters
+        ----------
+        credit_card_number : int
+            The credit card of the customer.
+
+        number_of_installments : int
+            The total number of payments for this
+            hosting facility.
+
+        chosen_hosting_id : int
+            A single sequencial identifier that
+            makes possible to locate this hosting product on 
+            the server.
+
+        Returns
+        --------
+        result : boolean
+            True if the operation succeded, False otherwize.
+        """
+
+        result = self.client.service.buyHosting(credit_card_number,
+                                                number_of_installments,
+                                                chosen_hosting_id)
+
+        return result

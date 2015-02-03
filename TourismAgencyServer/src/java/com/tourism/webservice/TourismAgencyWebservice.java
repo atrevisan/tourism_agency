@@ -332,4 +332,54 @@ public class TourismAgencyWebservice {
         
         manager.saveHosting(host);
     }
+    
+    /**
+     * Return all the registered hosting facilities to the client.
+     * 
+     * @return hosts available for purchase
+     */
+    @WebMethod(operationName = "getHosts")
+    public Hosting[] getHosts() {
+       
+        System.out.println("Getting hosts");
+        
+        TouristicProductsManager manager = new TouristicProductsManager();
+        ArrayList<Hosting> hosts = manager.getHosts();
+        
+        Hosting[] hostsArray = new Hosting[hosts.size()];
+        
+        return hosts.toArray(hostsArray);
+    }
+    
+     /**
+     * Perform the selling operation: check payment and if everything ok
+     * delete the product.
+     * 
+     * @param creditCardNumber is used to check the authenticity of the
+     *                         customer.
+     * @param numberOfInstallments is used to control the number of payments
+     *                             the customer will make.
+     * @param hostingID is used to find this product and then delete it.
+     * 
+     * @return true if the operation succeded, false otherwize.
+     */
+    @WebMethod(operationName = "buyHosting")
+    public boolean buyHosting(@WebParam(name = "creditCardNumber") int creditCardNumber, 
+                              @WebParam(name = "numberOfInstallments") int numberOfInstallments, 
+                              @WebParam(name = "hostingID") int hostingID) {
+        
+        System.out.println("Performing hosting purchase.");
+        
+        PaymentProcessor processor = new PaymentProcessor();
+        
+        boolean paymentOk = processor.processPayment(creditCardNumber, numberOfInstallments);
+        
+        if (paymentOk){
+        
+            TouristicProductsManager manager = new TouristicProductsManager();
+            return manager.deleteHosting(hostingID);
+        }
+        
+        return false;
+    }
 }

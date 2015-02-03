@@ -263,6 +263,17 @@ public class TouristicProductsManager {
     }
     
     /**
+     * Remove a product from the filesystem
+     * @param hostingID is the id of the hosting product that will 
+     *                  be deleted.
+     * @return true if the product exists, false otherwize.
+     */
+    public boolean deleteHosting(int hostingID) {
+    
+        return this.deleteProduct(hostingID, this.hostsFileName);
+    }
+    
+    /**
      * Cast an ArrayList of Products to the corresponding product type.
      * 
      * @param products are the objects that will be cast.
